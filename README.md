@@ -2,12 +2,14 @@
 
 Convert a collection of features to a fixed-dimensional matrix using the hashing trick.
 
-Note, this requires Jina>=2.2.4.
+Note, this requires Jina>=2.2.5.
 
 ## Example
 
 Here I use `FeatureHasher` to hash each sentence of Pride and Prejudice into a 128-dim vector, and 
 then use `.match` to find top-K similar sentences.
+
+To use other Example, 
 
 ```python
 from jina import Document, DocumentArray, Executor
