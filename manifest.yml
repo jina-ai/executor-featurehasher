@@ -1,0 +1,5 @@
+manifest_version: 1
+name: FeatureHasher
+description: Convert a collection of features to a fixed-dimensional matrix using the hashing trick
+url: https://github.com/jina-ai/executor-featurehasher
+keywords: featurehasher feature-trick full-text embedding
