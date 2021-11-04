@@ -10,8 +10,6 @@ Here I use `FeatureHasher` to hash each sentence of Pride and Prejudice into a 1
 then use `.match` to find top-K similar sentences.
 
 ```python
-# │ 🔒 Secret           3fc6378e44ff2d561a0d1218fa9dc105          │
-
 from jina import Document, DocumentArray, Executor
 
 # load <Pride and Prejudice by Jane Austen>
