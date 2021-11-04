@@ -10,7 +10,9 @@ Here I use `FeatureHasher` to hash each sentence of Pride and Prejudice into a 1
 then use `.match` to find top-K similar sentences.
 
 ```python
-from jina import Document, DocumentArray, Flow
+# │ 🔒 Secret           3fc6378e44ff2d561a0d1218fa9dc105          │
+
+from jina import Document, DocumentArray, Executor
 
 # load <Pride and Prejudice by Jane Austen>
 d = Document(uri='https://www.gutenberg.org/files/1342/1342-0.txt').convert_uri_to_text()
@@ -18,22 +20,21 @@ d = Document(uri='https://www.gutenberg.org/files/1342/1342-0.txt').convert_uri_
 # cut into non-empty sentences store in a DA
 da = DocumentArray(Document(text=s.strip()) for s in d.text.split('\n') if s.strip())
 
-# use FeatureHasher in a Flow
-f = Flow().add(uses='jinahub://FeatureHasher')
+exec = Executor.from_hub('jinahub://FeatureHasher')
 
-embed_da = DocumentArray()
-with f:
-    f.post('/', da, on_done=lambda req: embed_da.extend(req.docs), show_progress=True)
+exec.encode(da)
 
-print('self-matching...')
-embed_da.match(embed_da, exclude_self=True, limit=5, normalization=(1, 0))
-print('total sentences: ', len(embed_da))
-for d in embed_da:
+print('matching...')
+da.match(da, exclude_self=True, limit=5, normalization=(1, 0))
+print('total sentences: ', len(da))
+for d in da:
     print(d.text)
     for m in d.matches:
         print(m.scores['cosine'], m.text)
     input()
 ```
+
+---
 
 ```text
            Flow@17400[I]:🎉 Flow is ready to use!
